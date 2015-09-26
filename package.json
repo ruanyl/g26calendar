@@ -1,0 +1,28 @@
+{
+  "name": "g26calendar",
+  "version": "1.0.0",
+  "description": "calendar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruanyl/g26calendar.git"
+  },
+  "keywords": [
+    "calendar"
+  ],
+  "author": "Ruan Yulong <ruanyu1@gmail.com> (http://github.com/ruanyl)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruanyl/g26calendar/issues"
+  },
+  "homepage": "https://github.com/ruanyl/g26calendar",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.43"
+  }
+}
