@@ -42,7 +42,6 @@ app.get('/event', function(req, res) {
 
 /**
  * TODO: data validation needed!
- * TODO: take timezone into cosideration!
  *
  * save an event
  */
@@ -50,8 +49,8 @@ app.post('/event', function(req, res) {
   var eventData = {
     title: req.body.title,
     content: req.body.content,
-    start: moment(req.body.start, 'YYYY-MM-DD HH:mm'),
-    end: moment(req.body.end, 'YYYY-MM-DD HH:mm')
+    start: moment.utc(req.body.start, 'YYYY-MM-DD HH:mm'),
+    end: moment.utc(req.body.end, 'YYYY-MM-DD HH:mm')
   };
   db.saveEvent(eventData, function(err) {
     if (err) {
@@ -96,10 +95,20 @@ app.put('/event/:id', function(req, res) {
         'status': 'error'
       });
     } else {
+      res.send(doc);
+    }
+  });
+});
+
+app.get('/event/w/:day', function(req, res) {
+  var day = req.params.day;
+  db.findEventsDayofWeek(day, function(err, docs) {
+    if (err) {
       res.send({
-        'status': 'success',
-        'doc': doc
+        'status': 'error'
       });
+    } else {
+      res.send(docs);
     }
   });
 });
