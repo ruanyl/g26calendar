@@ -14,6 +14,7 @@ setup mongodb
 mkdir -p data/db
 mongod --dbpath ./data/db/
 ```
+
 ### step 1
 
 - [x] Fetching, creating, deleting and editing events works
@@ -22,3 +23,48 @@ mongod --dbpath ./data/db/
 - [x] Events are stored in a database. Events in the db can be stored, fetched, deleted and modified.
 - [x] Brief documentation on how to install/use the application.
 - [ ] more features?
+
+### API Endpoint
+
+get event by id
+```
+GET /event/:id
+```
+
+list all events
+```
+GET /event
+```
+
+save a event
+```
+POST /event
+```
+input data
+```
+{
+    title: <title of the event>
+    content: <description of the event>
+    start: <start time>
+    end: <end time>
+}
+```
+
+delete an event by id
+```
+DELETE /event/:id
+```
+
+update an event by id
+```
+PUT /event/:id
+```
+input data
+```
+{
+    title: <title of the event>
+    content: <description of the event>
+    start: <start time>
+    end: <end time>
+}
+```
