@@ -50,7 +50,8 @@ app.post('/event', function(req, res) {
     title: req.body.title,
     content: req.body.content,
     start: moment.utc(req.body.start, 'YYYY-MM-DD HH:mm'),
-    end: moment.utc(req.body.end, 'YYYY-MM-DD HH:mm')
+    end: moment.utc(req.body.end, 'YYYY-MM-DD HH:mm'),
+    priority: req.body.priority
   };
   db.saveEvent(eventData, function(err) {
     if (err) {
@@ -103,6 +104,19 @@ app.put('/event/:id', function(req, res) {
 app.get('/event/w/:day', function(req, res) {
   var day = req.params.day;
   db.findEventsDayofWeek(day, function(err, docs) {
+    if (err) {
+      res.send({
+        'status': 'error'
+      });
+    } else {
+      res.send(docs);
+    }
+  });
+});
+
+app.post('/event/search', function(req, res) {
+  var query = req.body;
+  db.findEvents(query, function(err, docs) {
     if (err) {
       res.send({
         'status': 'error'

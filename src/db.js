@@ -64,11 +64,19 @@ function findEventsDayofWeek(dayOfWeek, callback) {
   });
 }
 
+function findEvents(query, callback) {
+  var EventModel = mongoose.model('event', Schema.EventSchema);
+  EventModel.find(query, function(err, docs) {
+    callback(err, docs);
+  });
+}
+
 module.exports = {
   saveEvent: saveEvent,
   listEvents: listEvents,
   findEventById: findEventById,
   deleteEventById: deleteEventById,
   updateEventById: updateEventById,
-  findEventsDayofWeek: findEventsDayofWeek
+  findEventsDayofWeek: findEventsDayofWeek,
+  findEvents: findEvents
 };

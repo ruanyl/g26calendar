@@ -22,7 +22,7 @@ mongod --dbpath ./data/db/
 - [x] Possible to perform searches on events, matches returned. E.g. list all events which are scheduled for this Wednesday
 - [x] Events are stored in a database. Events in the db can be stored, fetched, deleted and modified.
 - [x] Brief documentation on how to install/use the application.
-- [ ] more features?
+- [x] more features? find events by priority
 
 ### API Endpoint
 
@@ -66,5 +66,20 @@ input data
     content: <description of the event>
     start: <start time>
     end: <end time>
+}
+```
+
+```
+GET /event/w/:day
+```
+for example: `/event/w/Monday`, will get all the events of this Monday
+
+```
+POST /event/search
+```
+example: search by priority
+```
+{
+    priority: 2
 }
 ```

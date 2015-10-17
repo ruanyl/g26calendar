@@ -4,7 +4,8 @@ var EventSchema = mongoose.Schema({
   title: 'String',
   content: 'String',
   start: 'Date',
-  end: 'Date'
+  end: 'Date',
+  priority: {type: 'Number', default: 0}
 });
 
 module.exports = {
