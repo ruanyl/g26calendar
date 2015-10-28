@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ruanyl/g26calendar",
   "dependencies": {
     "body-parser": "^1.14.0",
+    "cors": "^2.7.1",
     "express": "^4.13.3",
     "moment": "^2.10.6",
     "mongodb": "^2.0.43",

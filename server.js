@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var db = require('./src/db');
@@ -8,6 +9,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(bodyParser.json());
+app.use(cors());
 
 /**
  * get event by id
@@ -49,8 +51,8 @@ app.post('/event', function(req, res) {
   var eventData = {
     title: req.body.title,
     content: req.body.content,
-    start: moment.utc(req.body.start, 'YYYY-MM-DD HH:mm'),
-    end: moment.utc(req.body.end, 'YYYY-MM-DD HH:mm'),
+    start: new Date(req.body.start),
+    end: new Date(req.body.end),
     priority: req.body.priority
   };
   db.saveEvent(eventData, function(err) {
@@ -127,7 +129,7 @@ app.post('/event/search', function(req, res) {
   });
 });
 
-var server = app.listen(8080, function() {
+var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
 
