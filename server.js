@@ -55,15 +55,13 @@ app.post('/event', function(req, res) {
     end: new Date(req.body.end),
     priority: req.body.priority
   };
-  db.saveEvent(eventData, function(err) {
+  db.saveEvent(eventData, function(err, doc) {
     if (err) {
       res.send({
         'status': 'error'
       });
     } else {
-      res.send({
-        'status': 'success'
-      });
+      res.send(doc);
     }
   });
 });
@@ -127,6 +125,31 @@ app.post('/event/search', function(req, res) {
       res.send(docs);
     }
   });
+});
+
+app.get('/event/search/:view', function(req, res) {
+  var view = req.params.view;
+  if(view === 'day') {
+    db.findEvents3Days(function(err, docs) {
+      if (err) {
+        res.send({
+          'status': 'error'
+        });
+      } else {
+        res.send(docs);
+      }
+    });
+  } else {
+    db.findEventsMonth(function(err, docs) {
+      if (err) {
+        res.send({
+          'status': 'error'
+        });
+      } else {
+        res.send(docs);
+      }
+    });
+  }
 });
 
 var server = app.listen(3000, function() {

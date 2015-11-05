@@ -6,8 +6,8 @@ var Schema = require('./schema');
 function saveEvent(data, callback) {
   var EventModel = mongoose.model('event', Schema.EventSchema);
   var event = new EventModel(data);
-  event.save(function(err, eventObject) {
-    callback(err, eventObject);
+  event.save(function(err, doc) {
+    callback(err, doc);
   });
 }
 
@@ -64,6 +64,36 @@ function findEventsDayofWeek(dayOfWeek, callback) {
   });
 }
 
+// find events of the coming 3 days
+function findEvents3Days(callback) {
+  var EventModel = mongoose.model('event', Schema.EventSchema);
+  EventModel.find({
+    'start': {
+      '$lt': new Date(moment.utc().startOf('day').add(3, 'days'))
+    },
+    'end': {
+      '$gt': new Date(moment.utc().startOf('day'))
+    }
+  }, function(err, docs) {
+    callback(err, docs);
+  });
+}
+
+// find events of this month
+function findEventsMonth(callback) {
+  var EventModel = mongoose.model('event', Schema.EventSchema);
+  EventModel.find({
+    'start': {
+      '$lt': new Date(moment.utc().endOf('month'))
+    },
+    'end': {
+      '$gt': new Date(moment.utc().startOf('month'))
+    }
+  }, function(err, docs) {
+    callback(err, docs);
+  });
+}
+
 function findEvents(query, callback) {
   var EventModel = mongoose.model('event', Schema.EventSchema);
   EventModel.find(query, function(err, docs) {
@@ -78,5 +108,7 @@ module.exports = {
   deleteEventById: deleteEventById,
   updateEventById: updateEventById,
   findEventsDayofWeek: findEventsDayofWeek,
-  findEvents: findEvents
+  findEvents: findEvents,
+  findEvents3Days: findEvents3Days,
+  findEventsMonth: findEventsMonth
 };
