@@ -69,9 +69,7 @@ function findEvents3Days(callback) {
   var EventModel = mongoose.model('event', Schema.EventSchema);
   EventModel.find({
     'start': {
-      '$lt': new Date(moment.utc().startOf('day').add(3, 'days'))
-    },
-    'end': {
+      '$lt': new Date(moment.utc().startOf('day').add(3, 'days')),
       '$gt': new Date(moment.utc().startOf('day'))
     }
   }, function(err, docs) {
@@ -84,9 +82,7 @@ function findEventsMonth(callback) {
   var EventModel = mongoose.model('event', Schema.EventSchema);
   EventModel.find({
     'start': {
-      '$lt': new Date(moment.utc().endOf('month'))
-    },
-    'end': {
+      '$lt': new Date(moment.utc().endOf('month')),
       '$gt': new Date(moment.utc().startOf('month'))
     }
   }, function(err, docs) {
@@ -101,6 +97,19 @@ function findEvents(query, callback) {
   });
 }
 
+function syncFromGoogle(data, callback) {
+  var EventModel = mongoose.model('event', Schema.EventSchema);
+  console.log(data);
+  EventModel.update({
+    googleId: data.googleId
+  },
+  data, {
+    upsert: true
+  }, function(err, doc) {
+    callback(err, doc);
+  });
+}
+
 module.exports = {
   saveEvent: saveEvent,
   listEvents: listEvents,
@@ -110,5 +119,6 @@ module.exports = {
   findEventsDayofWeek: findEventsDayofWeek,
   findEvents: findEvents,
   findEvents3Days: findEvents3Days,
-  findEventsMonth: findEventsMonth
+  findEventsMonth: findEventsMonth,
+  syncFromGoogle: syncFromGoogle
 };

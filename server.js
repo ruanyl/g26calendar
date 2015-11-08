@@ -152,6 +152,19 @@ app.get('/event/search/:view', function(req, res) {
   }
 });
 
+app.post('/event/sync', function(req, res) {
+  var event = req.body;
+  db.syncFromGoogle(event, function(err, doc) {
+    if (err) {
+      res.send({
+        'status': 'error'
+      });
+    } else {
+      res.send(doc);
+    }
+  });
+});
+
 var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
