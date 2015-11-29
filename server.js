@@ -4,6 +4,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var db = require('./src/db');
+var g = require('./src/google');
 
 app.use(bodyParser.urlencoded({
   extended: false
@@ -162,6 +163,31 @@ app.post('/event/sync', function(req, res) {
     } else {
       res.send(doc);
     }
+  });
+});
+
+app.get('/event/sync/google', function(req, res) {
+  g.syncFromGoogle(function(events) {
+    events = events.map(function(event) {
+      var event = {
+        title: event.summary,
+        content: event.description,
+        start: new Date(event.start.dateTime),
+        end: new Date(event.end.dateTime),
+        googleId: event.id
+      };
+      db.syncFromGoogle(event, function(err, doc) {
+        if (err) {
+          res.send({
+            'status': 'error'
+          });
+        } else {
+          console.log(doc);
+        }
+      });
+      return event;
+    });
+    res.send({data: events});
   });
 });
 

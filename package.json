@@ -24,6 +24,8 @@
     "body-parser": "^1.14.0",
     "cors": "^2.7.1",
     "express": "^4.13.3",
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^2.1.6",
     "moment": "^2.10.6",
     "mongodb": "^2.0.43",
     "mongoose": "^4.1.9"
