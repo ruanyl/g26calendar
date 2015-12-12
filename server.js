@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var moment = require('moment');
 var db = require('./src/db');
 var g = require('./src/google');
 
